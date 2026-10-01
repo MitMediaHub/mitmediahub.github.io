@@ -3429,343 +3429,1037 @@ units[i];
 
 }
 
-</script>
-<!-- MITMEDIAHUB RULE-BASED ASSISTANT START -->
-<style>
-#mmhBotBtn{
-position:fixed;
-right:18px;
-bottom:115px;
-width:58px;
-height:58px;
-border:0;
-border-radius:50%;
-background:linear-gradient(145deg,#ffb15a,#ff7200);
-color:#fff;
-z-index:999999;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:27px;
-box-shadow:
-0 12px 28px rgba(255,112,0,.28),
-0 4px 12px rgba(0,0,0,.18),
-inset 0 1px 2px rgba(255,255,255,.55);
-transition:.25s ease;
+  </script>
+  <!-- MITMEDIAHUB ASSISTANT START -->
+<style type="text/css">
+/*<![CDATA[*/
+#mmh-premium-ai,
+#mmh-premium-ai *{
+box-sizing:border-box
 }
-#mmhBotBtn:hover{transform:translateY(-3px) scale(1.04)}
 
-#mmhBotBox{
-position:fixed;
-right:18px;
-bottom:184px;
-width:360px;
-max-width:calc(100vw - 28px);
-height:525px;
-background:rgba(255,255,255,.98);
-border:1px solid rgba(255,255,255,.8);
-border-radius:24px;
+#mmh-premium-ai{
+font-family:Arial,sans-serif
+}
+
+/* FLOATING BUTTON */
+#mmh-ai-float{
+position:fixed !important;
+right:18px !important;
+bottom:78px !important;
+width:62px !important;
+height:62px !important;
+padding:0 !important;
+margin:0 !important;
+border:2px solid #fff !important;
+border-radius:50% !important;
+background:linear-gradient(145deg,#ffb52c,#ff8500,#f26800) !important;
+box-shadow:0 7px 25px rgba(0,0,0,.35) !important;
+display:flex !important;
+align-items:center !important;
+justify-content:center !important;
+cursor:pointer !important;
+z-index:2147483647 !important;
+pointer-events:auto !important;
+-webkit-tap-highlight-color:transparent;
+touch-action:manipulation
+}
+
+#mmh-ai-float:active{
+transform:scale(.94)
+}
+
+.mmh-floating-headset{
+position:relative;
+width:34px;
+height:34px;
+pointer-events:none
+}
+
+.mmh-headset-arc{
+position:absolute;
+top:3px;
+left:4px;
+width:26px;
+height:25px;
+border:4px solid #fff;
+border-bottom:0;
+border-radius:16px 16px 0 0
+}
+
+.mmh-headset-left,
+.mmh-headset-right{
+position:absolute;
+top:16px;
+width:7px;
+height:12px;
+background:#fff;
+border-radius:5px
+}
+
+.mmh-headset-left{left:2px}
+.mmh-headset-right{right:2px}
+
+.mmh-headset-arm{
+position:absolute;
+right:4px;
+bottom:3px;
+width:10px;
+height:8px;
+border-right:3px solid #fff;
+border-bottom:3px solid #fff;
+border-radius:0 0 7px 0
+}
+
+/* CHAT PANEL */
+#mmh-ai-panel{
+position:fixed !important;
+right:18px !important;
+bottom:150px !important;
+width:395px;
+height:600px;
+max-width:calc(100vw - 24px);
+max-height:calc(100vh - 165px);
+background:#101010;
+border:1px solid rgba(255,145,25,.35);
+border-radius:25px;
 overflow:hidden;
-z-index:999998;
-display:none;
+z-index:2147483646;
+display:flex;
 flex-direction:column;
-font-family:Arial,sans-serif;
-box-shadow:
-0 25px 70px rgba(0,0,0,.20),
-0 8px 25px rgba(255,125,20,.15),
-0 0 35px rgba(255,145,50,.10);
-backdrop-filter:blur(14px);
-animation:mmhIn .22s ease;
-}
-@keyframes mmhIn{
-from{opacity:0;transform:translateY(12px) scale(.97)}
-to{opacity:1;transform:translateY(0) scale(1)}
+opacity:0;
+visibility:hidden;
+transform:translateY(15px);
+transition:.2s;
+box-shadow:0 25px 70px rgba(0,0,0,.5);
+pointer-events:none
 }
 
-#mmhBotHead{
-height:72px;
-padding:0 15px;
+#mmh-ai-panel.open{
+opacity:1;
+visibility:visible;
+transform:none;
+pointer-events:auto
+}
+
+.mmh-ai-header{
+min-height:88px;
+padding:13px 14px;
 display:flex;
 align-items:center;
 gap:11px;
-color:#fff;
-background:linear-gradient(135deg,#ffad55,#ff7100);
-box-shadow:0 4px 15px rgba(255,105,0,.18);
+background:linear-gradient(135deg,#17120e,#2b180b)
 }
-.mmhBotAvatar{
-width:43px;
-height:43px;
-border-radius:50%;
-background:#fff;
-color:#ff7500;
+
+.mmh-ai-brand{
+width:52px;
+height:52px;
+min-width:52px;
+border-radius:16px;
+background:linear-gradient(145deg,#ffb52c,#ff7800);
 display:flex;
 align-items:center;
-justify-content:center;
-font-size:21px;
-box-shadow:0 3px 10px rgba(0,0,0,.12);
+justify-content:center
 }
-.mmhBotTitle strong{display:block;font-size:16px}
-.mmhBotTitle small{display:block;margin-top:3px;font-size:11px;opacity:.9}
 
-#mmhBotClose{
-margin-left:auto;
-width:32px;
-height:32px;
-border:0;
-border-radius:50%;
-background:rgba(255,255,255,.18);
+.mmh-brand-headset{
+position:relative;
+width:31px;
+height:31px
+}
+
+.mmh-brand-headset-arc{
+position:absolute;
+top:2px;
+left:3px;
+width:25px;
+height:24px;
+border:3px solid #fff;
+border-bottom:0;
+border-radius:15px 15px 0 0
+}
+
+.mmh-brand-headset-left,
+.mmh-brand-headset-right{
+position:absolute;
+top:15px;
+width:7px;
+height:11px;
+background:#fff;
+border-radius:5px
+}
+
+.mmh-brand-headset-left{left:1px}
+.mmh-brand-headset-right{right:1px}
+
+.mmh-brand-headset-mic{
+position:absolute;
+right:3px;
+bottom:2px;
+width:9px;
+height:7px;
+border-right:3px solid #fff;
+border-bottom:3px solid #fff;
+border-radius:0 0 6px 0
+}
+
+.mmh-ai-head-text{
+flex:1
+}
+
+.mmh-ai-name{
 color:#fff;
 font-size:20px;
-cursor:pointer;
+font-weight:700
 }
 
-#mmhBotChat{
-flex:1;
-overflow-y:auto;
-padding:17px 14px;
-background:linear-gradient(180deg,#fafafa,#f5f6f8);
-scroll-behavior:smooth;
-}
-.mmhMsg{
-max-width:86%;
-padding:11px 13px;
-margin:8px 0;
-font-size:14px;
-line-height:1.55;
-border-radius:16px;
-word-break:break-word;
-}
-.mmhAI{
-background:#fff;
-color:#30343b;
-border:1px solid #ededed;
-border-top-left-radius:6px;
-box-shadow:0 3px 12px rgba(0,0,0,.045);
-}
-.mmhUser{
-margin-left:auto;
-background:linear-gradient(135deg,#ff9b43,#ff7200);
-color:#fff;
-border-top-right-radius:6px;
+.mmh-ai-status{
+margin-top:4px;
+color:#aaa;
+font-size:11px
 }
 
-#mmhBotInput{
-display:flex;
-gap:7px;
-padding:11px;
-background:#fff;
-border-top:1px solid #eee;
+.mmh-status-dot{
+display:inline-block;
+width:6px;
+height:6px;
+margin-right:5px;
+border-radius:50%;
+background:#4fe58a
 }
-#mmhBotText{
-flex:1;
-min-width:0;
-height:42px;
-padding:0 15px;
-border:1px solid #ddd;
-border-radius:22px;
-outline:0;
-font-size:14px;
-background:#fafafa;
-}
-#mmhBotText:focus{border-color:#ff9a45;background:#fff}
 
-.mmhAction{
-width:42px;
-height:42px;
+#mmh-ai-close{
+width:37px;
+height:37px;
+padding:0;
 border:0;
 border-radius:50%;
-background:linear-gradient(145deg,#ff9f4d,#ff7200);
+background:#222;
 color:#fff;
-cursor:pointer;
+font-size:25px;
+cursor:pointer
+}
+
+/* MESSAGES */
+#mmh-ai-messages{
+flex:1;
+overflow-y:auto;
+padding:15px 12px;
+background:#101010
+}
+
+.mmh-ai-welcome{
+padding:15px;
+margin-bottom:15px;
+border-radius:18px;
+border:1px solid rgba(255,145,25,.18);
+background:#181818
+}
+
+.mmh-welcome-title{
+color:#fff;
+font-size:17px;
+font-weight:700;
+margin-bottom:7px
+}
+
+.mmh-welcome-text{
+color:#aaa;
+font-size:13px;
+line-height:1.55
+}
+
+.mmh-welcome-sign{
+margin-top:12px;
+color:#eee;
+font-size:11px
+}
+
+.mmh-msg{
+display:flex;
+width:100%;
+margin-bottom:10px;
+align-items:flex-end;
+gap:7px
+}
+
+.mmh-msg.ai{
+justify-content:flex-start
+}
+
+.mmh-msg.user{
+justify-content:flex-end
+}
+
+.mmh-msg-avatar{
+width:27px;
+height:27px;
+min-width:27px;
+border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-box-shadow:0 4px 10px rgba(255,115,0,.20);
+font-size:10px;
+font-weight:700;
+background:#252525;
+color:#ff951b
 }
-#mmhMic svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
-#mmhSend{font-size:18px}
 
-@media(max-width:480px){
-#mmhBotBtn{right:15px;bottom:105px}
-#mmhBotBox{
-right:9px;
-bottom:172px;
-width:calc(100vw - 18px);
-height:70vh;
-max-height:570px;
+.mmh-msg.user .mmh-msg-avatar{
+background:#303030;
+color:#ddd;
+order:2
+}
+
+.mmh-bubble{
+max-width:82%;
+padding:10px 13px;
+font-size:13px;
+line-height:1.55;
+white-space:pre-wrap;
+overflow-wrap:anywhere
+}
+
+.mmh-msg.ai .mmh-bubble{
+color:#ddd;
+background:#1c1c1c;
+border:1px solid #2c2c2c;
+border-radius:6px 17px 17px 17px
+}
+
+.mmh-msg.user .mmh-bubble{
+color:#fff;
+background:linear-gradient(135deg,#ff9818,#f26e00);
+border-radius:17px 6px 17px 17px
+}
+
+/* TYPING */
+.mmh-typing{
+display:flex;
+gap:4px;
+height:15px;
+align-items:center
+}
+
+.mmh-typing span{
+width:5px;
+height:5px;
+border-radius:50%;
+background:#aaa;
+animation:mmhT 1s infinite
+}
+
+.mmh-typing span:nth-child(2){
+animation-delay:.15s
+}
+
+.mmh-typing span:nth-child(3){
+animation-delay:.3s
+}
+
+@keyframes mmhT{
+0%,60%,100%{
+opacity:.3
+}
+30%{
+opacity:1;
+transform:translateY(-3px)
 }
 }
+
+/* INPUT */
+.mmh-ai-input-area{
+padding:9px 10px 6px;
+background:#121212;
+border-top:1px solid #252525
+}
+
+.mmh-ai-input-row{
+display:flex;
+align-items:center;
+gap:7px;
+height:51px
+}
+
+#mmh-ai-mic{
+width:42px;
+height:42px;
+min-width:42px;
+padding:0;
+border:1px solid #353535;
+border-radius:50%;
+background:#1e1e1e;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer
+}
+
+#mmh-ai-mic.listening{
+background:#f27000;
+box-shadow:0 0 0 4px rgba(255,120,0,.12)
+}
+
+.mmh-microphone{
+position:relative;
+width:21px;
+height:26px
+}
+
+.mmh-mic-body{
+position:absolute;
+left:6px;
+top:1px;
+width:9px;
+height:15px;
+background:currentColor;
+border-radius:7px
+}
+
+.mmh-mic-arc{
+position:absolute;
+left:2px;
+top:8px;
+width:17px;
+height:13px;
+border:2px solid currentColor;
+border-top:0;
+border-radius:0 0 11px 11px
+}
+
+.mmh-mic-stem{
+position:absolute;
+left:9px;
+top:20px;
+width:2px;
+height:5px;
+background:currentColor
+}
+
+.mmh-mic-base{
+position:absolute;
+left:5px;
+bottom:0;
+width:10px;
+height:2px;
+background:currentColor
+}
+
+#mmh-ai-input{
+flex:1;
+min-width:0;
+height:44px;
+padding:0 13px;
+outline:0;
+border:1px solid #383838;
+border-radius:23px;
+background:#1a1a1a;
+color:#fff;
+font-size:13px
+}
+
+#mmh-ai-input:focus{
+border-color:#ff9135
+}
+
+#mmh-ai-send{
+width:45px;
+height:45px;
+min-width:45px;
+padding:0;
+border:0;
+border-radius:50%;
+background:linear-gradient(145deg,#ff9b18,#f27000);
+color:#fff;
+font-size:19px;
+cursor:pointer
+}
+
+#mmh-ai-send:disabled{
+opacity:.55;
+cursor:default
+}
+
+.mmh-ai-footer{
+text-align:center;
+color:#666;
+font-size:9px;
+padding:3px
+}
+
+@media(max-width:600px){
+
+#mmh-ai-float{
+right:14px !important;
+bottom:74px !important;
+width:60px !important;
+height:60px !important
+}
+
+#mmh-ai-panel{
+right:7px !important;
+bottom:140px !important;
+width:calc(100vw - 14px);
+height:calc(100vh - 160px);
+max-width:none;
+max-height:none
+}
+
+.mmh-ai-name{
+font-size:18px
+}
+
+}
+/*]]>*/
 </style>
 
-<button id="mmhBotBtn" aria-label="Open MitMediaHub Assistant">🎧</button>
+<div id="mmh-premium-ai">
 
-<div id="mmhBotBox">
+<button id="mmh-ai-float" type="button" aria-label="Open MitMediaHub Assistant">
 
-<div id="mmhBotHead">
-<div class="mmhBotAvatar">🎧</div>
-<div class="mmhBotTitle">
-<strong>MitMediaHub Assistant</strong>
-<small>Website Help</small>
-</div>
-<button id="mmhBotClose" aria-label="Close">×</button>
+<div class="mmh-floating-headset">
+<div class="mmh-headset-arc"></div>
+<div class="mmh-headset-left"></div>
+<div class="mmh-headset-right"></div>
+<div class="mmh-headset-arm"></div>
 </div>
 
-<div id="mmhBotChat"></div>
-
-<div id="mmhBotInput">
-<button class="mmhAction" id="mmhMic" aria-label="Voice input">
-<svg viewBox="0 0 24 24">
-<rect x="9" y="3" width="6" height="11" rx="3"></rect>
-<path d="M6.5 11a5.5 5.5 0 0 0 11 0"></path>
-<path d="M12 16.5V21"></path>
-<path d="M9 21h6"></path>
-</svg>
 </button>
-<input id="mmhBotText" type="text" placeholder="Ask anything" autocomplete="off">
-<button class="mmhAction" id="mmhSend" aria-label="Send">➤</button>
+
+<div id="mmh-ai-panel">
+
+<div class="mmh-ai-header">
+
+<div class="mmh-ai-brand">
+
+<div class="mmh-brand-headset">
+<div class="mmh-brand-headset-arc"></div>
+<div class="mmh-brand-headset-left"></div>
+<div class="mmh-brand-headset-right"></div>
+<div class="mmh-brand-headset-mic"></div>
 </div>
 
 </div>
 
-<script>
+<div class="mmh-ai-head-text">
+
+<div class="mmh-ai-name">
+MitMediaHub Assistant
+</div>
+
+<div class="mmh-ai-status">
+<span class="mmh-status-dot"></span>
+Online Website Assistant
+</div>
+
+</div>
+
+<button id="mmh-ai-close" type="button" aria-label="Close">
+&#215;
+</button>
+
+</div>
+
+<div id="mmh-ai-messages">
+
+<div class="mmh-ai-welcome">
+
+<div class="mmh-welcome-title">
+Welcome to MitMediaHub
+</div>
+
+<div class="mmh-welcome-text">
+Welcome to MitMediaHub. Use our website to work with supported Image, PDF and Video tools from one convenient place. The assistant can guide you about the tools and features available on this website.
+</div>
+
+<div class="mmh-welcome-sign">
+&#8212; Mitesh<br/>
+MitMediaHub
+</div>
+
+</div>
+
+</div>
+
+<div class="mmh-ai-input-area">
+
+<div class="mmh-ai-input-row">
+
+<button id="mmh-ai-mic" type="button" aria-label="Voice">
+
+<div class="mmh-microphone">
+<div class="mmh-mic-body"></div>
+<div class="mmh-mic-arc"></div>
+<div class="mmh-mic-stem"></div>
+<div class="mmh-mic-base"></div>
+</div>
+
+</button>
+
+<input
+id="mmh-ai-input"
+type="text"
+autocomplete="off"
+placeholder="Ask anything..."
+/>
+
+<button id="mmh-ai-send" type="button" aria-label="Send">
+&#10148;
+</button>
+
+</div>
+
+<div class="mmh-ai-footer">
+MitMediaHub &#8226; Mitesh
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
 (function(){
 
-const btn=document.getElementById("mmhBotBtn");
-const box=document.getElementById("mmhBotBox");
-const close=document.getElementById("mmhBotClose");
-const chat=document.getElementById("mmhBotChat");
-const input=document.getElementById("mmhBotText");
-const send=document.getElementById("mmhSend");
-const mic=document.getElementById("mmhMic");
+"use strict";
 
-let welcomed=false;
+var root=document.getElementById("mmh-premium-ai");
 
-function addMsg(text,type){
-const d=document.createElement("div");
-d.className="mmhMsg "+(type==="user"?"mmhUser":"mmhAI");
-d.innerHTML=text;
-chat.appendChild(d);
-chat.scrollTop=chat.scrollHeight;
-}
+if(!root)return;
 
-function welcome(){
-if(welcomed)return;
-welcomed=true;
+var openButton=document.getElementById("mmh-ai-float");
+var panel=document.getElementById("mmh-ai-panel");
+var closeButton=document.getElementById("mmh-ai-close");
+var input=document.getElementById("mmh-ai-input");
+var sendButton=document.getElementById("mmh-ai-send");
+var micButton=document.getElementById("mmh-ai-mic");
+var messages=document.getElementById("mmh-ai-messages");
 
-addMsg(
-"<strong>Welcome to MitMediaHub</strong><br><br>"+
-"MitMediaHub is a simple online hub for useful media tools. "+
-"You can explore tools for images, PDFs and videos from one place."+
-"<br><br><strong>Mitesh</strong><br>MitMediaHub",
-"ai"
-);
-}
+/* OPEN BUTTON */
 
-function answer(q){
-q=q.toLowerCase().trim();
+if(openButton){
 
-if(/^(hi|hello|hey|namaste|नमस्ते|હેલો|હાય)/i.test(q)){
-return "Hello! Welcome to MitMediaHub. I can help you understand the tools available on this website.";
-}
+openButton.addEventListener("click",function(event){
 
-if(/pdf|पीडीएफ|pdf बन|document/i.test(q)){
-return "<strong>PDF Tool</strong><br>You can use the PDF section available on MitMediaHub to work with supported PDF features. Open the PDF tool from the website and choose the option you need.";
-}
+event.preventDefault();
+event.stopPropagation();
 
-if(/video|वीडियो|4k|2k|1080|720|480|240/i.test(q)){
-return "<strong>Video Tool</strong><br>MitMediaHub provides video-related tools. Open the Video section and choose the available output option supported by the tool.";
-}
-
-if(/image|photo|picture|इमेज|फोटो|तस्वीर|jpg|jpeg|png|webp/i.test(q)){
-return "<strong>Image Tool</strong><br>Open the Image section on MitMediaHub to work with supported image tools and formats.";
-}
-
-if(/resize|size|compress|reduce|kb|mb|साइज|कम|compress/i.test(q)){
-return "<strong>Media Tools</strong><br>MitMediaHub includes media utility features designed to help you work with supported image, PDF and video files.";
-}
-
-if(/mitmediahub|website|site|वेबसाइट|साइट/i.test(q)){
-return "<strong>MitMediaHub</strong><br>MitMediaHub is an online media-tools website focused on useful image, PDF and video utilities.";
-}
-
-if(/contact|कॉन्टैक्ट|संपर्क/i.test(q)){
-return "For website-related contact information, please open the <strong>Contact</strong> section of MitMediaHub.";
-}
-
-if(/about|अबाउट|जानकारी/i.test(q)){
-return "You can learn more about MitMediaHub from the <strong>About Us</strong> section of the website.";
-}
-
-return "I’m the MitMediaHub website assistant. I can currently help with the website’s <strong>Image, PDF, Video</strong> tools and general MitMediaHub information. Please ask something related to the website.";
-}
-
-function sendMessage(){
-const q=input.value.trim();
-if(!q)return;
-
-addMsg(q,"user");
-input.value="";
+panel.classList.add("open");
 
 setTimeout(function(){
-addMsg(answer(q),"ai");
-},180);
-}
 
-btn.onclick=function(){
-box.style.display="flex";
-welcome();
+if(input){
 input.focus();
-};
-
-close.onclick=function(){
-box.style.display="none";
-};
-
-send.onclick=sendMessage;
-
-input.addEventListener("keydown",function(e){
-if(e.key==="Enter")sendMessage();
-});
-
-document.addEventListener("click",function(e){
-if(box.style.display==="flex" &&
-!box.contains(e.target) &&
-e.target!==btn){
-box.style.display="none";
 }
+
+},100);
+
 });
 
-/* Browser voice input - no external API */
-if("webkitSpeechRecognition" in window || "SpeechRecognition" in window){
-const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-const recognition=new SpeechRecognition();
+}
 
-recognition.lang="en-IN";
+/* CLOSE BUTTON */
+
+if(closeButton){
+
+closeButton.addEventListener("click",function(event){
+
+event.preventDefault();
+event.stopPropagation();
+
+panel.classList.remove("open");
+
+});
+
+}
+
+/* ADD MESSAGE */
+
+function addMessage(text,type){
+
+var row=document.createElement("div");
+
+row.className="mmh-msg "+type;
+
+var avatar=document.createElement("div");
+
+avatar.className="mmh-msg-avatar";
+
+avatar.textContent=
+type==="user" ? "YOU" : "AI";
+
+var bubble=document.createElement("div");
+
+bubble.className="mmh-bubble";
+
+bubble.textContent=text;
+
+row.appendChild(avatar);
+row.appendChild(bubble);
+
+messages.appendChild(row);
+
+messages.scrollTop=messages.scrollHeight;
+
+}
+
+/* TYPING */
+
+function showTyping(){
+
+var row=document.createElement("div");
+
+row.id="mmh-typing-row";
+row.className="mmh-msg ai";
+
+var avatar=document.createElement("div");
+
+avatar.className="mmh-msg-avatar";
+avatar.textContent="AI";
+
+var bubble=document.createElement("div");
+
+bubble.className="mmh-bubble";
+
+bubble.innerHTML=
+'<div class="mmh-typing">'+
+'<span></span><span></span><span></span>'+
+'</div>';
+
+row.appendChild(avatar);
+row.appendChild(bubble);
+
+messages.appendChild(row);
+
+messages.scrollTop=messages.scrollHeight;
+
+}
+
+function removeTyping(){
+
+var row=document.getElementById("mmh-typing-row");
+
+if(row){
+row.remove();
+}
+
+}
+
+/* RULE BASED ANSWERS */
+
+function getAnswer(question){
+
+var q=question.toLowerCase().trim();
+
+/* GREETING */
+
+if(
+/^(hi|hello|hey|namaste|नमस्ते|नमस्कार|હેલો|હાય)$/i.test(q)
+){
+
+return "Hello! Welcome to MitMediaHub. I can help you with the tools and features available on this website.";
+
+}
+
+/* PDF */
+
+if(
+/pdf|पीडीएफ|document|documents|डॉक्यूमेंट|page size|पेज साइज/i.test(q)
+){
+
+return "You can use the PDF section of MitMediaHub for supported PDF-related tasks. Open the PDF tool and choose the feature you need.";
+
+}
+
+/* VIDEO */
+
+if(
+/video|वीडियो|4k|3k|2k|1080|720|480|240|compress video|video size/i.test(q)
+){
+
+return "Open the Video section of MitMediaHub, select your video and choose the supported video option you need.";
+
+}
+
+/* IMAGE */
+
+if(
+/image|images|photo|photos|picture|इमेज|फोटो|तस्वीर|jpg|jpeg|png|webp|resize image|image size/i.test(q)
+){
+
+return "Open the Image section of MitMediaHub to work with the supported image tools and formats. Select your image and use the available settings.";
+
+}
+
+/* COMPRESS */
+
+if(
+/compress|compressed|compression|reduce size|file size|kb|mb|साइज कम|कंप्रेस/i.test(q)
+){
+
+return "MitMediaHub provides supported media utility features for Image, PDF and Video files. Open the relevant tool and use its available compression or size settings.";
+
+}
+
+/* FORMAT */
+
+if(
+/format|convert|conversion|jpg to|png to|webp|jpeg|pdf to/i.test(q)
+){
+
+return "For supported conversions, open the relevant Image or PDF tool on MitMediaHub and select the format available in that tool.";
+
+}
+
+/* WEBSITE */
+
+if(
+/mitmediahub|website|site|वेबसाइट|साइट|what is this/i.test(q)
+){
+
+return "MitMediaHub is an online media-tools website focused on useful Image, PDF and Video utilities in one place.";
+
+}
+
+/* ABOUT */
+
+if(
+/about|about us|अबाउट|जानकारी|who are you/i.test(q)
+){
+
+return "MitMediaHub is designed as a convenient online hub for supported media tools. You can explore the Image, PDF and Video sections directly from the website.";
+
+}
+
+/* CONTACT */
+
+if(
+/contact|contact us|कॉन्टैक्ट|संपर्क|email|ईमेल/i.test(q)
+){
+
+return "For contact information, please open the Contact section of MitMediaHub from the website menu.";
+
+}
+
+/* MITESH */
+
+if(
+/who is mitesh|मितेश कौन|developer|डेवलपर|owner|ओनर/i.test(q)
+){
+
+return "Mitesh is the developer of MitMediaHub.";
+
+}
+
+/* PRIVACY */
+
+if(
+/privacy|privacy policy|प्राइवेसी|गोपनीयता/i.test(q)
+){
+
+return "For complete privacy information, please open the Privacy Policy page available in the MitMediaHub website menu.";
+
+}
+
+/* COPYRIGHT */
+
+if(
+/copyright|कॉपीराइट|content use|content policy/i.test(q)
+){
+
+return "Please refer to the Copyright Policy and website terms before using or reproducing content from MitMediaHub.";
+
+}
+
+/* TERMS */
+
+if(
+/terms|terms and condition|terms & conditions|शर्त|नियम/i.test(q)
+){
+
+return "The complete Terms and Conditions are available through the Terms and Conditions page of MitMediaHub.";
+
+}
+
+/* HELP */
+
+if(
+/help|how to use|कैसे करें|मदद|सहायता/i.test(q)
+){
+
+return "I can guide you about MitMediaHub's Image, PDF and Video tools. Tell me which tool you want to use.";
+
+}
+
+/* DEFAULT */
+
+return "I'm the MitMediaHub website assistant. I can currently help with the Image, PDF and Video tools, website information, contact, privacy, copyright and terms. Please ask something related to MitMediaHub.";
+
+}
+
+/* SEND */
+
+function sendMessage(){
+
+var question=input.value.trim();
+
+if(!question)return;
+
+addMessage(question,"user");
+
+input.value="";
+
+showTyping();
+
+sendButton.disabled=true;
+
+setTimeout(function(){
+
+removeTyping();
+
+addMessage(
+getAnswer(question),
+"ai"
+);
+
+sendButton.disabled=false;
+
+input.focus();
+
+},350);
+
+}
+
+/* SEND CLICK */
+
+if(sendButton){
+
+sendButton.addEventListener("click",function(event){
+
+event.preventDefault();
+event.stopPropagation();
+
+sendMessage();
+
+});
+
+}
+
+/* ENTER */
+
+if(input){
+
+input.addEventListener("keydown",function(event){
+
+if(event.key==="Enter"){
+
+event.preventDefault();
+
+sendMessage();
+
+}
+
+});
+
+}
+
+/* MICROPHONE */
+
+var SpeechRecognition=
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+if(SpeechRecognition){
+
+var recognition=new SpeechRecognition();
+
+recognition.continuous=false;
 recognition.interimResults=false;
 recognition.maxAlternatives=1;
+recognition.lang="en-IN";
 
-mic.onclick=function(){
+micButton.addEventListener("click",function(){
+
+try{
+
 recognition.start();
+
+}catch(error){}
+
+});
+
+recognition.onstart=function(){
+
+micButton.classList.add("listening");
+
 };
 
-recognition.onresult=function(e){
-input.value=e.results[0][0].transcript;
-input.focus();
+recognition.onresult=function(event){
+
+if(
+event.results &&
+event.results[0] &&
+event.results[0][0]
+){
+
+input.value=
+event.results[0][0].transcript;
+
+}
+
+micButton.classList.remove("listening");
+
 };
 
 recognition.onerror=function(){
-input.placeholder="Type your question";
+
+micButton.classList.remove("listening");
+
 };
+
+recognition.onend=function(){
+
+micButton.classList.remove("listening");
+
+};
+
 }else{
-mic.onclick=function(){
+
+micButton.addEventListener("click",function(){
+
+if(input){
 input.focus();
-};
 }
 
+});
+
+}
+
+/* OUTSIDE CLICK */
+
+document.addEventListener("click",function(event){
+
+if(
+panel.classList.contains("open") &&
+!panel.contains(event.target) &&
+event.target!==openButton &&
+!openButton.contains(event.target)
+){
+
+panel.classList.remove("open");
+
+}
+
+});
+
 })();
+//]]>
 </script>
-<!-- MITMEDIAHUB RULE-BASED ASSISTANT END -->
+
+<!-- MITMEDIAHUB ASSISTANT END -->
 </body>
 <meta name="google-site-verification" content="Zy-w707rGolUdC58OZBTSYC7gflq0A0vzJt7vnysVrM" />
 </html>
