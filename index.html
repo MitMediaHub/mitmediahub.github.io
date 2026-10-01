@@ -3430,7 +3430,342 @@ units[i];
 }
 
 </script>
+<!-- MITMEDIAHUB RULE-BASED ASSISTANT START -->
+<style>
+#mmhBotBtn{
+position:fixed;
+right:18px;
+bottom:115px;
+width:58px;
+height:58px;
+border:0;
+border-radius:50%;
+background:linear-gradient(145deg,#ffb15a,#ff7200);
+color:#fff;
+z-index:999999;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:27px;
+box-shadow:
+0 12px 28px rgba(255,112,0,.28),
+0 4px 12px rgba(0,0,0,.18),
+inset 0 1px 2px rgba(255,255,255,.55);
+transition:.25s ease;
+}
+#mmhBotBtn:hover{transform:translateY(-3px) scale(1.04)}
 
+#mmhBotBox{
+position:fixed;
+right:18px;
+bottom:184px;
+width:360px;
+max-width:calc(100vw - 28px);
+height:525px;
+background:rgba(255,255,255,.98);
+border:1px solid rgba(255,255,255,.8);
+border-radius:24px;
+overflow:hidden;
+z-index:999998;
+display:none;
+flex-direction:column;
+font-family:Arial,sans-serif;
+box-shadow:
+0 25px 70px rgba(0,0,0,.20),
+0 8px 25px rgba(255,125,20,.15),
+0 0 35px rgba(255,145,50,.10);
+backdrop-filter:blur(14px);
+animation:mmhIn .22s ease;
+}
+@keyframes mmhIn{
+from{opacity:0;transform:translateY(12px) scale(.97)}
+to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+#mmhBotHead{
+height:72px;
+padding:0 15px;
+display:flex;
+align-items:center;
+gap:11px;
+color:#fff;
+background:linear-gradient(135deg,#ffad55,#ff7100);
+box-shadow:0 4px 15px rgba(255,105,0,.18);
+}
+.mmhBotAvatar{
+width:43px;
+height:43px;
+border-radius:50%;
+background:#fff;
+color:#ff7500;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:21px;
+box-shadow:0 3px 10px rgba(0,0,0,.12);
+}
+.mmhBotTitle strong{display:block;font-size:16px}
+.mmhBotTitle small{display:block;margin-top:3px;font-size:11px;opacity:.9}
+
+#mmhBotClose{
+margin-left:auto;
+width:32px;
+height:32px;
+border:0;
+border-radius:50%;
+background:rgba(255,255,255,.18);
+color:#fff;
+font-size:20px;
+cursor:pointer;
+}
+
+#mmhBotChat{
+flex:1;
+overflow-y:auto;
+padding:17px 14px;
+background:linear-gradient(180deg,#fafafa,#f5f6f8);
+scroll-behavior:smooth;
+}
+.mmhMsg{
+max-width:86%;
+padding:11px 13px;
+margin:8px 0;
+font-size:14px;
+line-height:1.55;
+border-radius:16px;
+word-break:break-word;
+}
+.mmhAI{
+background:#fff;
+color:#30343b;
+border:1px solid #ededed;
+border-top-left-radius:6px;
+box-shadow:0 3px 12px rgba(0,0,0,.045);
+}
+.mmhUser{
+margin-left:auto;
+background:linear-gradient(135deg,#ff9b43,#ff7200);
+color:#fff;
+border-top-right-radius:6px;
+}
+
+#mmhBotInput{
+display:flex;
+gap:7px;
+padding:11px;
+background:#fff;
+border-top:1px solid #eee;
+}
+#mmhBotText{
+flex:1;
+min-width:0;
+height:42px;
+padding:0 15px;
+border:1px solid #ddd;
+border-radius:22px;
+outline:0;
+font-size:14px;
+background:#fafafa;
+}
+#mmhBotText:focus{border-color:#ff9a45;background:#fff}
+
+.mmhAction{
+width:42px;
+height:42px;
+border:0;
+border-radius:50%;
+background:linear-gradient(145deg,#ff9f4d,#ff7200);
+color:#fff;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 4px 10px rgba(255,115,0,.20);
+}
+#mmhMic svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
+#mmhSend{font-size:18px}
+
+@media(max-width:480px){
+#mmhBotBtn{right:15px;bottom:105px}
+#mmhBotBox{
+right:9px;
+bottom:172px;
+width:calc(100vw - 18px);
+height:70vh;
+max-height:570px;
+}
+}
+</style>
+
+<button id="mmhBotBtn" aria-label="Open MitMediaHub Assistant">🎧</button>
+
+<div id="mmhBotBox">
+
+<div id="mmhBotHead">
+<div class="mmhBotAvatar">🎧</div>
+<div class="mmhBotTitle">
+<strong>MitMediaHub Assistant</strong>
+<small>Website Help</small>
+</div>
+<button id="mmhBotClose" aria-label="Close">×</button>
+</div>
+
+<div id="mmhBotChat"></div>
+
+<div id="mmhBotInput">
+<button class="mmhAction" id="mmhMic" aria-label="Voice input">
+<svg viewBox="0 0 24 24">
+<rect x="9" y="3" width="6" height="11" rx="3"></rect>
+<path d="M6.5 11a5.5 5.5 0 0 0 11 0"></path>
+<path d="M12 16.5V21"></path>
+<path d="M9 21h6"></path>
+</svg>
+</button>
+<input id="mmhBotText" type="text" placeholder="Ask anything" autocomplete="off">
+<button class="mmhAction" id="mmhSend" aria-label="Send">➤</button>
+</div>
+
+</div>
+
+<script>
+(function(){
+
+const btn=document.getElementById("mmhBotBtn");
+const box=document.getElementById("mmhBotBox");
+const close=document.getElementById("mmhBotClose");
+const chat=document.getElementById("mmhBotChat");
+const input=document.getElementById("mmhBotText");
+const send=document.getElementById("mmhSend");
+const mic=document.getElementById("mmhMic");
+
+let welcomed=false;
+
+function addMsg(text,type){
+const d=document.createElement("div");
+d.className="mmhMsg "+(type==="user"?"mmhUser":"mmhAI");
+d.innerHTML=text;
+chat.appendChild(d);
+chat.scrollTop=chat.scrollHeight;
+}
+
+function welcome(){
+if(welcomed)return;
+welcomed=true;
+
+addMsg(
+"<strong>Welcome to MitMediaHub</strong><br><br>"+
+"MitMediaHub is a simple online hub for useful media tools. "+
+"You can explore tools for images, PDFs and videos from one place."+
+"<br><br><strong>Mitesh</strong><br>MitMediaHub",
+"ai"
+);
+}
+
+function answer(q){
+q=q.toLowerCase().trim();
+
+if(/^(hi|hello|hey|namaste|नमस्ते|હેલો|હાય)/i.test(q)){
+return "Hello! Welcome to MitMediaHub. I can help you understand the tools available on this website.";
+}
+
+if(/pdf|पीडीएफ|pdf बन|document/i.test(q)){
+return "<strong>PDF Tool</strong><br>You can use the PDF section available on MitMediaHub to work with supported PDF features. Open the PDF tool from the website and choose the option you need.";
+}
+
+if(/video|वीडियो|4k|2k|1080|720|480|240/i.test(q)){
+return "<strong>Video Tool</strong><br>MitMediaHub provides video-related tools. Open the Video section and choose the available output option supported by the tool.";
+}
+
+if(/image|photo|picture|इमेज|फोटो|तस्वीर|jpg|jpeg|png|webp/i.test(q)){
+return "<strong>Image Tool</strong><br>Open the Image section on MitMediaHub to work with supported image tools and formats.";
+}
+
+if(/resize|size|compress|reduce|kb|mb|साइज|कम|compress/i.test(q)){
+return "<strong>Media Tools</strong><br>MitMediaHub includes media utility features designed to help you work with supported image, PDF and video files.";
+}
+
+if(/mitmediahub|website|site|वेबसाइट|साइट/i.test(q)){
+return "<strong>MitMediaHub</strong><br>MitMediaHub is an online media-tools website focused on useful image, PDF and video utilities.";
+}
+
+if(/contact|कॉन्टैक्ट|संपर्क/i.test(q)){
+return "For website-related contact information, please open the <strong>Contact</strong> section of MitMediaHub.";
+}
+
+if(/about|अबाउट|जानकारी/i.test(q)){
+return "You can learn more about MitMediaHub from the <strong>About Us</strong> section of the website.";
+}
+
+return "I’m the MitMediaHub website assistant. I can currently help with the website’s <strong>Image, PDF, Video</strong> tools and general MitMediaHub information. Please ask something related to the website.";
+}
+
+function sendMessage(){
+const q=input.value.trim();
+if(!q)return;
+
+addMsg(q,"user");
+input.value="";
+
+setTimeout(function(){
+addMsg(answer(q),"ai");
+},180);
+}
+
+btn.onclick=function(){
+box.style.display="flex";
+welcome();
+input.focus();
+};
+
+close.onclick=function(){
+box.style.display="none";
+};
+
+send.onclick=sendMessage;
+
+input.addEventListener("keydown",function(e){
+if(e.key==="Enter")sendMessage();
+});
+
+document.addEventListener("click",function(e){
+if(box.style.display==="flex" &&
+!box.contains(e.target) &&
+e.target!==btn){
+box.style.display="none";
+}
+});
+
+/* Browser voice input - no external API */
+if("webkitSpeechRecognition" in window || "SpeechRecognition" in window){
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+const recognition=new SpeechRecognition();
+
+recognition.lang="en-IN";
+recognition.interimResults=false;
+recognition.maxAlternatives=1;
+
+mic.onclick=function(){
+recognition.start();
+};
+
+recognition.onresult=function(e){
+input.value=e.results[0][0].transcript;
+input.focus();
+};
+
+recognition.onerror=function(){
+input.placeholder="Type your question";
+};
+}else{
+mic.onclick=function(){
+input.focus();
+};
+}
+
+})();
+</script>
+<!-- MITMEDIAHUB RULE-BASED ASSISTANT END -->
 </body>
 <meta name="google-site-verification" content="Zy-w707rGolUdC58OZBTSYC7gflq0A0vzJt7vnysVrM" />
 </html>
